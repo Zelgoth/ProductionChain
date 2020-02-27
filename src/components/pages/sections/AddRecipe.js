@@ -36,8 +36,8 @@ class AddRecipe extends Component {
                 isValid = false;
             }
         }
-        console.log(rawRecipe);
-        if (isValid && Object.keys(rawRecipe).length === 8) {
+
+        if (isValid && Object.keys(rawRecipe).length === 9) {
             let inputList = [];
             let outputList = [];
             try {
