@@ -37,7 +37,7 @@ class AddRecipe extends Component {
             }
         }
 
-        if (isValid && Object.keys(rawRecipe).length === 9) {
+        if (isValid && Object.keys(rawRecipe).length === 8) {
             let inputList = [];
             let outputList = [];
             try {
@@ -89,6 +89,7 @@ class AddRecipe extends Component {
                     errorAlert: "visible",
                     errorText: "Invalid: Check item format"
                 });
+                console.log(rawRecipe);
             }
         }
         else {
@@ -96,6 +97,7 @@ class AddRecipe extends Component {
                 errorAlert: "visible",
                 errorText: "Invalid: Missing info."
             });
+            console.log(rawRecipe);
         }
     }
 

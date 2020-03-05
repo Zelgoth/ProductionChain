@@ -38,7 +38,6 @@ export function OutputRecipes(graph, recipes) {
 
 export function CalculateRatio(recipes) {
     //Calculates the items Units/second ratio and adds it to outputs.
-    console.log(recipes)
     recipes.forEach(recipe => {
         let step = recipe.step;
         let time = recipe.time;

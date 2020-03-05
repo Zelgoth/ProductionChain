@@ -10,23 +10,30 @@ import TableSection from './sections/TableSection';
 class DashboardPage extends Component {
     constructor() {
         super()
-
-        this.state = {
-            headers: data.Headers.map(headers => {
-                return (headers.label)
-            }),
-            recipes: CalculateRatio(exampleRecipes.Recipes),
-            targets: {
-                "item": {
-                    step: null,
-                    name: "",
-                    ratio: 0
-                },
-                "machines": 0,
-                "bps": 0,
-                "disable": true
+        let newState;
+        if(localStorage.getItem('data')){
+            newState = JSON.parse(localStorage.getItem('data'));
+        }
+        else{
+            newState = {
+                headers: data.Headers.map(headers => {
+                    return (headers.label)
+                }),
+                recipes: CalculateRatio(exampleRecipes.Recipes),
+                targets: {
+                    "item": {
+                        step: null,
+                        name: "",
+                        ratio: 0
+                    },
+                    "machines": 0,
+                    "bps": 0,
+                    "disable": true
+                }
             }
         }
+
+        this.state = newState;
     }
 
     handleDelete = recipeStep => {
@@ -50,6 +57,7 @@ class DashboardPage extends Component {
         }
 
         this.setState(state);
+        localStorage.setItem('data', JSON.stringify(this.state));
     };
 
     handleOverclock = (recipeId, status) => {
@@ -67,6 +75,7 @@ class DashboardPage extends Component {
         recipes = OutputRecipes(graph, recipes);
 
         this.setState({ recipes });
+        localStorage.setItem('data', JSON.stringify(this.state));
     };
 
     handleTiers = (recipeId, status) => {
@@ -84,13 +93,12 @@ class DashboardPage extends Component {
         recipes = OutputRecipes(graph, recipes);
 
         this.setState({ recipes })
+        localStorage.setItem('data', JSON.stringify(this.state));
     };
 
     handleSwapDown = recipeStep => {
         if (recipeStep < this.state.recipes.length - 1) {
             let recipes = this.state.recipes;
-            console.log(this.state.recipes);
-            console.log(recipes);
             let currentItem = recipes[recipeStep];
             let nextItem = recipes[recipeStep + 1];
 
@@ -108,6 +116,7 @@ class DashboardPage extends Component {
             recipes[recipeStep + 1] = currentItem;
 
             this.setState({ recipes });
+            localStorage.setItem('data', JSON.stringify(this.state));
         }
     };
 
@@ -132,6 +141,7 @@ class DashboardPage extends Component {
             recipes[recipeStep - 1] = currentItem;
 
             this.setState({ recipes });
+            localStorage.setItem('data', JSON.stringify(this.state));
         }
     };
 
@@ -156,6 +166,7 @@ class DashboardPage extends Component {
         recipes = CalculateRatio(recipes);
 
         this.setState({ recipes });
+        localStorage.setItem('data', JSON.stringify(this.state));
     };
 
     handleSettingChange = (update, type = "name") => {
@@ -208,6 +219,7 @@ class DashboardPage extends Component {
         let graph = GenerateRecipeGraph(this.state.recipes, this.state.targets);
         recipes = OutputRecipes(graph, this.state.recipes);
         this.setState({ recipes });
+        localStorage.setItem('data', JSON.stringify(this.state));
     };
 
     render() {
